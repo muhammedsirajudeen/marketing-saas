@@ -52,20 +52,16 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof ShadcnSidebar>
 
     return (
         <ShadcnSidebar collapsible="icon" {...props} className="border-r border-gray-200 bg-white">
-            <SidebarHeader className="border-b border-gray-100 p-4">
+            <SidebarHeader className="border-b border-gray-100 p-4 group-data-[collapsible=icon]:p-2">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild className="hover:bg-transparent hover:text-inherit">
-                            <div className="flex items-center gap-2">
-                                <Avatar className="h-8 w-8 rounded-lg">
-                                    <AvatarImage src={user?.picture} alt={user?.name} />
-                                    <AvatarFallback className="rounded-lg bg-black text-white">
-                                        {user?.name?.charAt(0) || 'U'}
-                                    </AvatarFallback>
-                                </Avatar>
-                                <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-semibold text-sm truncate">{user?.name || 'User'}</span>
-                                    <span className="text-xs text-muted-foreground truncate">{user?.email || ''}</span>
+                            <div className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center">
+                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-black text-white shrink-0 group-data-[collapsible=icon]:size-6">
+                                    <span className="font-bold text-sm">D</span>
+                                </div>
+                                <div className="flex flex-col gap-0.5 leading-none transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:hidden">
+                                    <span className="font-semibold text-lg">Dashboard</span>
                                 </div>
                             </div>
                         </SidebarMenuButton>
@@ -124,13 +120,29 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof ShadcnSidebar>
                 </SidebarGroup>
             </SidebarContent>
 
-            <SidebarFooter className="border-t border-gray-100 p-4">
+            <SidebarFooter className="border-t border-gray-100 p-4 group-data-[collapsible=icon]:p-2">
                 <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton size="lg" className="hover:bg-gray-100 transition-colors mb-2">
+                            <div className="flex items-center gap-2 w-full group-data-[collapsible=icon]:justify-center">
+                                <Avatar className="h-8 w-8 rounded-lg shrink-0 group-data-[collapsible=icon]:h-6 group-data-[collapsible=icon]:w-6">
+                                    <AvatarImage src={user?.picture} alt={user?.name} />
+                                    <AvatarFallback className="rounded-lg bg-black text-white text-xs">
+                                        {user?.name?.charAt(0) || 'U'}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="flex flex-col gap-0.5 leading-none overflow-hidden transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:hidden">
+                                    <span className="font-semibold text-sm truncate">{user?.name || 'User'}</span>
+                                    <span className="text-xs text-muted-foreground truncate">{user?.email || ''}</span>
+                                </div>
+                            </div>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild tooltip="Log out">
                             <button className="w-full flex items-center gap-2" onClick={handleLogout}>
                                 <LogOut className="h-4 w-4" />
-                                <span>Log out</span>
+                                <span className="group-data-[collapsible=icon]:hidden">Log out</span>
                             </button>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
