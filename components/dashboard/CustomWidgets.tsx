@@ -58,40 +58,6 @@ export function CustomWidgets() {
                 </CardContent>
             </Card>
 
-            {/* Feature Checklist Widget */}
-            <Card className="shadow-sm bg-white border-2 border-gray-200">
-                <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                        <CardTitle className="text-sm font-semibold">Feature Checklist</CardTitle>
-                        <Maximize2 className="h-4 w-4 text-gray-600" />
-                    </div>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                    {featureChecklistItems.map((item, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                            <Checkbox className="mt-0.5" />
-                            <span className="text-sm text-gray-800">{item}</span>
-                        </div>
-                    ))}
-                </CardContent>
-            </Card>
-
-            {/* Quick Reminders Widget */}
-            <Card className="shadow-sm bg-white border-2 border-gray-200">
-                <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                        <CardTitle className="text-sm font-semibold">Quick Reminders</CardTitle>
-                        <Maximize2 className="h-4 w-4 text-gray-600" />
-                    </div>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                    {quickReminders.map((reminder, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                            <span className="text-sm text-gray-800">• {reminder}</span>
-                        </div>
-                    ))}
-                </CardContent>
-            </Card>
         </div>
     );
 }

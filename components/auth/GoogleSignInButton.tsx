@@ -4,10 +4,12 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useUser } from '@/components/providers/UserProvider';
 
 export function GoogleSignInButton() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const { login: userLogin } = useUser();
 
     const login = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
@@ -38,8 +40,9 @@ export function GoogleSignInButton() {
                 });
 
                 if (response.ok) {
+                    const data = await response.json();
+                    userLogin(data.tokens, data.user);
                     router.push('/dashboard');
-                    router.refresh();
                 } else {
                     console.error('Authentication failed');
                     setIsLoading(false);

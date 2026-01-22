@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, CheckSquare, Bell, Search, BarChart3, ShoppingCart, Briefcase, Wrench, FileText, FileSpreadsheet, Zap, LogOut } from 'lucide-react';
+import { Home, CheckSquare, Bell, Search, BarChart3, ShoppingCart, Briefcase, Wrench, FileText, FileSpreadsheet, Zap, LogOut, Puzzle, MessageSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -28,31 +28,26 @@ const navigationItems = [
 ];
 
 const appModules = [
+    { icon: MessageSquare, label: 'AI Chat', href: '/dashboard/ai-chat', color: 'text-rose-600' },
     { icon: BarChart3, label: 'CRM', href: '/dashboard/crm', color: 'text-green-600' },
     { icon: ShoppingCart, label: 'Sales', href: '/dashboard/sales', color: 'text-blue-600' },
     { icon: Briefcase, label: 'Projects', href: '/dashboard/projects', color: 'text-purple-600' },
     { icon: Wrench, label: 'Field Service', href: '/dashboard/field-service', color: 'text-orange-600' },
     { icon: FileText, label: 'Files', href: '/dashboard/files', color: 'text-gray-600' },
     { icon: FileSpreadsheet, label: 'Forms', href: '/dashboard/forms', color: 'text-yellow-600' },
+    { icon: Puzzle, label: 'Integrations', href: '/dashboard/integrations', color: 'text-indigo-600' },
     { icon: Zap, label: 'Automations', href: '/dashboard/automations', color: 'text-orange-500' },
 ];
 
+import { useUser } from '@/components/providers/UserProvider';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 export function Sidebar({ ...props }: React.ComponentProps<typeof ShadcnSidebar>) {
     const router = useRouter();
+    const { user, logout } = useUser();
 
     const handleLogout = async () => {
-        try {
-            const response = await fetch('/api/auth/logout', {
-                method: 'POST',
-            });
-
-            if (response.ok) {
-                router.push('/login');
-                router.refresh();
-            }
-        } catch (error) {
-            console.error('Logout failed:', error);
-        }
+        logout();
     };
 
     return (
@@ -62,11 +57,15 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof ShadcnSidebar>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild className="hover:bg-transparent hover:text-inherit">
                             <div className="flex items-center gap-2">
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-black text-white">
-                                    <span className="font-bold text-sm">D</span>
-                                </div>
+                                <Avatar className="h-8 w-8 rounded-lg">
+                                    <AvatarImage src={user?.picture} alt={user?.name} />
+                                    <AvatarFallback className="rounded-lg bg-black text-white">
+                                        {user?.name?.charAt(0) || 'U'}
+                                    </AvatarFallback>
+                                </Avatar>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-semibold text-lg">Dashboard</span>
+                                    <span className="font-semibold text-sm truncate">{user?.name || 'User'}</span>
+                                    <span className="text-xs text-muted-foreground truncate">{user?.email || ''}</span>
                                 </div>
                             </div>
                         </SidebarMenuButton>
